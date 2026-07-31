@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>F1 Drivers' Championship — Points by Race</title>
+<style>
+  :root{
+    --bg: #0b0d10;
+    --panel: #131619;
+    --grid: #23272c;
+    --text: #e8e6e1;
+    --muted: #8b9096;
+    --accent: #d0ff2b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: 'Segoe UI', -apple-system, system-ui, sans-serif;
+    padding: 28px 20px 40px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{margin-bottom:26px;}
+  .eyebrow{
+    font-family:'Courier New', monospace;
+    letter-spacing:.18em;
+    font-size:11px;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:13.5px; margin:0; line-height:1.5;}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--grid);
+    border-radius:10px;
+    padding:20px 22px 16px;
+    margin-bottom:22px;
+  }
+  .panel-title{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:6px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .panel-title h2{font-size:15px;margin:0;font-weight:600;}
+  .panel-title span{font-family:'Courier New', monospace;font-size:11px;color:var(--muted);}
+  .chart-box{position:relative; width:100%;}
+  svg{display:block; width:100%; height:auto; overflow:visible;}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:6px 16px;
+    margin-top:10px; padding-top:10px;
+    border-top:1px solid var(--grid);
+  }
+  .legend-item{
+    display:flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--text);
+    cursor:pointer; user-select:none;
+    opacity:1; transition:opacity .15s;
+  }
+  .legend-item.off{opacity:.3;}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .tooltip{
+    position:absolute;
+    background:#1a1e22;
+    border:1px solid #2c3136;
+    border-radius:6px;
+    padding:8px 10px;
+    font-size:11.5px;
+    line-height:1.65;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .1s;
+    z-index:10;
+    white-space:nowrap;
+    box-shadow:0 4px 16px rgba(0,0,0,.4);
+  }
+  .tooltip .t-title{color:var(--accent); font-family:'Courier New',monospace; font-size:10.5px; margin-bottom:4px;}
+  .tooltip .t-row{display:flex; align-items:center; gap:6px;}
+  .tooltip .t-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  footer{color:var(--muted); font-size:11.5px; margin-top:8px; line-height:1.6;}
+  footer a{color:var(--accent); text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">World Drivers' Championship</p>
+    <h1>Cumulative points by race — 2025 vs 2026</h1>
+    <p class="sub">Top six drivers in each season's final/current standings. Race and sprint points combined, running total after each round. Click a legend name to isolate a driver; hover the chart for exact values.</p>
+  </header>
+  <div class="panel">
+    <div class="panel-title">
+      <h2>2025 season — complete (24 rounds)</h2>
+      <span id="meta25"></span>
+    </div>
+    <div class="chart-box" id="box25"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">
+      <h2 id="title26">2026 season</h2>
+      <span id="meta26"></span>
+    </div>
+    <div class="chart-box" id="box26"></div>
+  </div>
+  <footer id="footer-note">
+    Data source: race &amp; sprint results from the FIA Formula One World Championship,
+    retrieved from the <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica&nbsp;F1&nbsp;API</a>
+    (the open, Ergast-compatible successor to the Ergast Developer API).
+    Formula 1, F1 and related marks are trademarks of Formula One Licensing&nbsp;BV; this is an unofficial, non-commercial project.
+  </footer>
+</div>
+<script>
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs){
+  const e = document.createElementNS(NS, tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+function niceMax(v){
+  const step = v <= 200 ? 25 : v <= 500 ? 50 : 100;
+  return Math.ceil(v / step) * step;
+}
+// Deterministic fallback color generator for any driver not in the curated map
+function fallbackColor(name){
+  let hash = 0;
+  for(let i=0;i<name.length;i++) hash = name.charCodeAt(i) + ((hash<<5)-hash);
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 65%, 55%)`;
+}
+const CURATED_COLORS = {
+  "Lando Norris":    "#FF8000",
+  "Oscar Piastri":   "#FFC299",
+  "Max Verstappen":  "#3671C6",
+  "George Russell":  "#27F4D2",
+  "Kimi Antonelli":  "#00A19B",
+  "Charles Leclerc": "#E8002D",
+  "Lewis Hamilton":  "#B12039"
+};
+function colorFor(name){ return CURATED_COLORS[name] || fallbackColor(name); }
+function renderChart(containerId, rounds, series){
+  const container = document.getElementById(containerId);
+  const drivers = Object.keys(series);
+  const W = 1000, H = 400;
+  const padL = 46, padR = 14, padT = 16, padB = 82;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const n = rounds.length;
+  const xAt = i => padL + (n === 1 ? 0 : (plotW * i) / (n - 1));
+  // Persistent per-driver visibility; toggled from the legend below.
+  const active = {};
+  drivers.forEach(d => active[d] = true);
+
+  const tooltip = document.createElement("div");
+  tooltip.className = "tooltip";
+
+  // (Re)draw the chart. The y-axis is scaled to only the visible drivers, so
+  // hiding leaders zooms the remaining lines to fill the plot area.
+  function draw(){
+    container.innerHTML = "";
+    container.style.position = "relative";
+    const shown = drivers.filter(d => active[d]);
+    // If everything is hidden, keep the full-field scale so the axis stays put.
+    const scaleDrivers = shown.length ? shown : drivers;
+    const maxVal = niceMax(Math.max(...scaleDrivers.map(d => Math.max(...series[d]))));
+    const yAt = v => padT + plotH - (plotH * v) / maxVal;
+
+    const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, preserveAspectRatio:"xMidYMid meet"});
+    const ticks = 5;
+    for(let t = 0; t <= ticks; t++){
+      const v = (maxVal / ticks) * t;
+      const y = yAt(v);
+      svg.appendChild(el("line", {x1:padL, x2:W-padR, y1:y, y2:y, stroke:"#1a1d21", "stroke-width":1}));
+      const lbl = el("text", {x:padL-8, y:y+4, "text-anchor":"end", "font-size":10.5, fill:"#8b9096"});
+      lbl.textContent = Math.round(v);
+      svg.appendChild(lbl);
+    }
+    const yTitle = el("text", {x:14, y:padT+plotH/2, "text-anchor":"middle", "font-size":10.5, fill:"#8b9096",
+      transform:`rotate(-90 14 ${padT+plotH/2})`});
+    yTitle.textContent = "Cumulative points";
+    svg.appendChild(yTitle);
+    rounds.forEach((r,i) => {
+      const x = xAt(i);
+      const t = el("text", {x:x, y:padT+plotH+16, "text-anchor":"end", "font-size":10.5, fill:"#8b9096",
+        transform:`rotate(-45 ${x} ${padT+plotH+16})`});
+      t.textContent = r;
+      svg.appendChild(t);
+    });
+    const hoverLine = el("line", {x1:0,x2:0,y1:padT,y2:padT+plotH, stroke:"#3a3f45", "stroke-width":1, "stroke-dasharray":"3,3", opacity:0});
+    svg.appendChild(hoverLine);
+    shown.forEach(d => {
+      const pts = series[d];
+      const dPath = pts.map((v,i) => `${i===0?'M':'L'} ${xAt(i)} ${yAt(v)}`).join(" ");
+      const path = el("path", {d:dPath, fill:"none", stroke:colorFor(d), "stroke-width":2.25,
+        "stroke-linejoin":"round", "stroke-linecap":"round"});
+      svg.appendChild(path);
+      pts.forEach((v,i) => svg.appendChild(el("circle", {cx:xAt(i), cy:yAt(v), r:2.6, fill:colorFor(d)})));
+    });
+    rounds.forEach((r,i) => {
+      const bandW = n === 1 ? plotW : plotW / (n-1);
+      const bx = xAt(i) - bandW/2;
+      const band = el("rect", {x:Math.max(padL,bx), y:padT, width:bandW, height:plotH, fill:"transparent", style:"cursor:pointer"});
+      band.addEventListener("mouseenter", () => showTip(i));
+      band.addEventListener("mousemove", (ev) => positionTip(ev));
+      band.addEventListener("mouseleave", hideTip);
+      svg.appendChild(band);
+    });
+    function showTip(i){
+      hoverLine.setAttribute("x1", xAt(i));
+      hoverLine.setAttribute("x2", xAt(i));
+      hoverLine.setAttribute("opacity", 1);
+      const rows = shown
+        .map(d => ({d, v: series[d][i]}))
+        .sort((a,b) => b.v - a.v);
+      tooltip.innerHTML = `<div class="t-title">${rounds[i]}</div>` + rows.map(r =>
+        `<div class="t-row"><span class="t-dot" style="background:${colorFor(r.d)}"></span>${r.d} — ${r.v} pts</div>`
+      ).join("");
+      tooltip.style.opacity = 1;
+    }
+    function positionTip(ev){
+      const rect = container.getBoundingClientRect();
+      let left = ev.clientX - rect.left + 14;
+      let top = ev.clientY - rect.top + 14;
+      tooltip.style.left = left + "px";
+      tooltip.style.top = top + "px";
+    }
+    function hideTip(){
+      hoverLine.setAttribute("opacity", 0);
+      tooltip.style.opacity = 0;
+    }
+    container.appendChild(svg);
+    container.appendChild(tooltip);
+  }
+
+  // Legend is built once; clicking a name toggles that driver and redraws.
+  const legend = document.createElement("div");
+  legend.className = "legend";
+  drivers.forEach(d => {
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = `<span class="legend-dot" style="background:${colorFor(d)}"></span>${d}`;
+    item.addEventListener("click", () => {
+      active[d] = !active[d];
+      item.classList.toggle("off", !active[d]);
+      draw();
+    });
+    legend.appendChild(item);
+  });
+  container.parentElement.appendChild(legend);
+
+  draw();
+}
+// --- load from data.json instead of an inline object ---
+fetch('./data.json', {cache: 'no-store'})
+  .then(r => { if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(data => {
+    renderChart("box25", data.rounds25, data.series25);
+    renderChart("box26", data.rounds26, data.series26);
+    document.getElementById('title26').textContent =
+      `2026 season — in progress (${data.rounds26.length} of ${data.total_rounds_2026 || 24} rounds)`;
+    document.getElementById('meta25').textContent = data.meta25 || '';
+    document.getElementById('meta26').textContent = data.meta26 || '';
+    document.getElementById('footer-note').innerHTML =
+      `Data source: race &amp; sprint results from the FIA Formula One World Championship, ` +
+      `retrieved from the <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica&nbsp;F1&nbsp;API</a> ` +
+      `(the open, Ergast-compatible successor to the Ergast Developer API). ` +
+      `Last updated ${data.last_updated || 'unknown'}. ` +
+      `Formula 1, F1 and related marks are trademarks of Formula One Licensing&nbsp;BV; this is an unofficial, non-commercial project.`;
+  })
+  .catch(err => {
+    ['box25','box26'].forEach(id => {
+      document.getElementById(id).innerHTML =
+        `<p style="color:#8b9096;font-size:13px;">Couldn't load standings data (${err.message}). Try refreshing.</p>`;
+    });
+  });
+</script>
+</body>
+</html>

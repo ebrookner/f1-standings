@@ -1,0 +1,39 @@
+name: Update F1 standings
+
+# Jolpica's maintainers aim to publish one data update per race weekend on the
+# Monday after the event, so a Monday-noon UTC run lines up with when fresh
+# results actually land (a couple of hours of buffer after their own update).
+on:
+  schedule:
+    - cron: "0 12 * * 1"   # every Monday at 12:00 UTC
+  workflow_dispatch: {}     # allow manual "Run workflow" for testing
+
+permissions:
+  contents: write           # needed to push the regenerated data.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # If this step exits non-zero (API failure / unexpected shape), the job
+      # fails and surfaces in the Actions tab. data.json is NOT rewritten on
+      # failure, so the commit step below has nothing to push — no bad data.
+      - name: Regenerate data.json
+        run: python scripts/update_standings.py
+
+      - name: Commit data.json if it changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update F1 standings data"
+          file_pattern: data.json
