@@ -194,7 +194,8 @@
     "Red Bull Ring",
     "Silverstone",
     "Spa",
-    "Hungaroring"
+    "Hungaroring",
+    "Zandvoort"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -208,20 +209,8 @@
       171,
       179,
       204,
-      219
-    ],
-    "Lewis Hamilton": [
-      12,
-      33,
-      41,
-      51,
-      72,
-      90,
-      115,
-      125,
-      147,
-      159,
-      169
+      219,
+      242
     ],
     "George Russell": [
       25,
@@ -234,20 +223,22 @@
       131,
       154,
       154,
-      160
+      160,
+      183
     ],
-    "Charles Leclerc": [
-      15,
-      34,
-      49,
-      59,
-      75,
-      75,
-      75,
-      79,
-      108,
-      126,
-      138
+    "Lewis Hamilton": [
+      12,
+      33,
+      41,
+      51,
+      72,
+      90,
+      115,
+      125,
+      147,
+      159,
+      169,
+      183
     ],
     "Lando Norris": [
       10,
@@ -260,7 +251,22 @@
       79,
       97,
       103,
-      128
+      128,
+      159
+    ],
+    "Charles Leclerc": [
+      15,
+      34,
+      49,
+      59,
+      75,
+      75,
+      75,
+      79,
+      108,
+      126,
+      138,
+      155
     ],
     "Max Verstappen": [
       8,
@@ -273,11 +279,12 @@
       73,
       76,
       91,
-      109
+      109,
+      112
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Hungaroring: Kimi Antonelli, 219 pts",
+  "meta26": "Leader through Zandvoort: Kimi Antonelli, 242 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-08-17T12:32:59Z"
+  "last_updated": "2026-08-23T17:09:06Z"
 }
