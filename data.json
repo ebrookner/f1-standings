@@ -195,7 +195,8 @@
     "Silverstone",
     "Spa",
     "Hungaroring",
-    "Zandvoort"
+    "Zandvoort",
+    "Monza"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -210,7 +211,8 @@
       179,
       204,
       219,
-      242
+      242,
+      267
     ],
     "George Russell": [
       25,
@@ -224,7 +226,8 @@
       154,
       154,
       160,
-      183
+      183,
+      201
     ],
     "Lewis Hamilton": [
       12,
@@ -238,7 +241,8 @@
       147,
       159,
       169,
-      183
+      183,
+      191
     ],
     "Lando Norris": [
       10,
@@ -252,7 +256,8 @@
       97,
       103,
       128,
-      159
+      159,
+      171
     ],
     "Charles Leclerc": [
       15,
@@ -266,6 +271,7 @@
       108,
       126,
       138,
+      155,
       155
     ],
     "Max Verstappen": [
@@ -280,11 +286,12 @@
       76,
       91,
       109,
-      112
+      112,
+      127
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Zandvoort: Kimi Antonelli, 242 pts",
+  "meta26": "Leader through Monza: Kimi Antonelli, 267 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-08-31T18:38:01Z"
+  "last_updated": "2026-09-07T17:04:50Z"
 }
