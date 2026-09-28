@@ -197,7 +197,8 @@
     "Hungaroring",
     "Zandvoort",
     "Monza",
-    "Madrid"
+    "Madrid",
+    "Baku"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -214,7 +215,8 @@
       219,
       242,
       267,
-      292
+      292,
+      302
     ],
     "George Russell": [
       25,
@@ -230,7 +232,8 @@
       160,
       183,
       201,
-      211
+      211,
+      236
     ],
     "Lewis Hamilton": [
       12,
@@ -246,7 +249,8 @@
       169,
       183,
       191,
-      191
+      191,
+      199
     ],
     "Lando Norris": [
       10,
@@ -262,6 +266,7 @@
       128,
       159,
       171,
+      186,
       186
     ],
     "Charles Leclerc": [
@@ -278,7 +283,8 @@
       138,
       155,
       155,
-      167
+      167,
+      179
     ],
     "Max Verstappen": [
       8,
@@ -294,11 +300,12 @@
       109,
       112,
       127,
-      145
+      145,
+      163
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Madrid: Kimi Antonelli, 292 pts",
+  "meta26": "Leader through Baku: Kimi Antonelli, 302 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-09-21T17:41:42Z"
+  "last_updated": "2026-09-28T19:07:16Z"
 }
