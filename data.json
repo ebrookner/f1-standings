@@ -198,7 +198,8 @@
     "Zandvoort",
     "Monza",
     "Madrid",
-    "Baku"
+    "Baku",
+    "Kuala Lumpur"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -216,7 +217,8 @@
       242,
       267,
       292,
-      302
+      302,
+      320
     ],
     "George Russell": [
       25,
@@ -233,6 +235,7 @@
       183,
       201,
       211,
+      236,
       236
     ],
     "Lewis Hamilton": [
@@ -250,24 +253,8 @@
       183,
       191,
       191,
-      199
-    ],
-    "Lando Norris": [
-      10,
-      15,
-      25,
-      51,
-      58,
-      58,
-      73,
-      79,
-      97,
-      103,
-      128,
-      159,
-      171,
-      186,
-      186
+      199,
+      214
     ],
     "Charles Leclerc": [
       15,
@@ -284,7 +271,26 @@
       155,
       155,
       167,
-      179
+      179,
+      191
+    ],
+    "Lando Norris": [
+      10,
+      15,
+      25,
+      51,
+      58,
+      58,
+      73,
+      79,
+      97,
+      103,
+      128,
+      159,
+      171,
+      186,
+      186,
+      188
     ],
     "Max Verstappen": [
       8,
@@ -301,11 +307,12 @@
       112,
       127,
       145,
-      163
+      163,
+      188
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Baku: Kimi Antonelli, 302 pts",
+  "meta26": "Leader through Kuala Lumpur: Kimi Antonelli, 320 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-09-28T19:07:16Z"
+  "last_updated": "2026-10-05T20:10:31Z"
 }
