@@ -199,7 +199,8 @@
     "Monza",
     "Madrid",
     "Baku",
-    "Kuala Lumpur"
+    "Kuala Lumpur",
+    "Marina Bay"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -218,7 +219,8 @@
       267,
       292,
       302,
-      320
+      320,
+      340
     ],
     "George Russell": [
       25,
@@ -236,7 +238,8 @@
       201,
       211,
       236,
-      236
+      236,
+      238
     ],
     "Lewis Hamilton": [
       12,
@@ -254,43 +257,8 @@
       191,
       191,
       199,
-      214
-    ],
-    "Charles Leclerc": [
-      15,
-      34,
-      49,
-      59,
-      75,
-      75,
-      75,
-      79,
-      108,
-      126,
-      138,
-      155,
-      155,
-      167,
-      179,
-      191
-    ],
-    "Lando Norris": [
-      10,
-      15,
-      25,
-      51,
-      58,
-      58,
-      73,
-      79,
-      97,
-      103,
-      128,
-      159,
-      171,
-      186,
-      186,
-      188
+      214,
+      229
     ],
     "Max Verstappen": [
       8,
@@ -308,11 +276,50 @@
       127,
       145,
       163,
-      188
+      188,
+      221
+    ],
+    "Charles Leclerc": [
+      15,
+      34,
+      49,
+      59,
+      75,
+      75,
+      75,
+      79,
+      108,
+      126,
+      138,
+      155,
+      155,
+      167,
+      179,
+      191,
+      215
+    ],
+    "Lando Norris": [
+      10,
+      15,
+      25,
+      51,
+      58,
+      58,
+      73,
+      79,
+      97,
+      103,
+      128,
+      159,
+      171,
+      186,
+      186,
+      188,
+      201
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Kuala Lumpur: Kimi Antonelli, 320 pts",
+  "meta26": "Leader through Marina Bay: Kimi Antonelli, 340 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-10-05T20:10:31Z"
+  "last_updated": "2026-10-12T20:46:49Z"
 }
