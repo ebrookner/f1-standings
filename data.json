@@ -200,7 +200,8 @@
     "Madrid",
     "Baku",
     "Kuala Lumpur",
-    "Marina Bay"
+    "Marina Bay",
+    "COTA"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -220,7 +221,8 @@
       292,
       302,
       320,
-      340
+      340,
+      365
     ],
     "George Russell": [
       25,
@@ -239,7 +241,8 @@
       211,
       236,
       236,
-      238
+      238,
+      242
     ],
     "Lewis Hamilton": [
       12,
@@ -258,7 +261,8 @@
       191,
       199,
       214,
-      229
+      229,
+      241
     ],
     "Max Verstappen": [
       8,
@@ -277,7 +281,8 @@
       145,
       163,
       188,
-      221
+      221,
+      236
     ],
     "Charles Leclerc": [
       15,
@@ -296,7 +301,8 @@
       167,
       179,
       191,
-      215
+      215,
+      233
     ],
     "Lando Norris": [
       10,
@@ -315,11 +321,12 @@
       186,
       186,
       188,
-      201
+      201,
+      211
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Marina Bay: Kimi Antonelli, 340 pts",
+  "meta26": "Leader through COTA: Kimi Antonelli, 365 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-10-19T18:11:44Z"
+  "last_updated": "2026-10-26T18:05:44Z"
 }
