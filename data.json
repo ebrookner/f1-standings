@@ -202,7 +202,8 @@
     "Kuala Lumpur",
     "Marina Bay",
     "COTA",
-    "Mexico City"
+    "Mexico City",
+    "Interlagos"
   ],
   "series26": {
     "Kimi Antonelli": [
@@ -224,7 +225,8 @@
       320,
       340,
       365,
-      380
+      380,
+      390
     ],
     "Max Verstappen": [
       8,
@@ -245,28 +247,8 @@
       188,
       221,
       236,
-      261
-    ],
-    "Lewis Hamilton": [
-      12,
-      33,
-      41,
-      51,
-      72,
-      90,
-      115,
-      125,
-      147,
-      159,
-      169,
-      183,
-      191,
-      191,
-      199,
-      214,
-      229,
-      241,
-      259
+      261,
+      279
     ],
     "George Russell": [
       25,
@@ -287,7 +269,30 @@
       236,
       238,
       242,
-      250
+      250,
+      262
+    ],
+    "Lewis Hamilton": [
+      12,
+      33,
+      41,
+      51,
+      72,
+      90,
+      115,
+      125,
+      147,
+      159,
+      169,
+      183,
+      191,
+      191,
+      199,
+      214,
+      229,
+      241,
+      259,
+      261
     ],
     "Charles Leclerc": [
       15,
@@ -308,7 +313,8 @@
       191,
       215,
       233,
-      245
+      245,
+      249
     ],
     "Lando Norris": [
       10,
@@ -329,11 +335,12 @@
       188,
       201,
       211,
-      221
+      221,
+      246
     ]
   },
   "meta25": "Champion: Lando Norris, 423 pts",
-  "meta26": "Leader through Mexico City: Kimi Antonelli, 380 pts",
+  "meta26": "Leader through Interlagos: Kimi Antonelli, 390 pts",
   "total_rounds_2026": 24,
-  "last_updated": "2026-11-02T21:16:59Z"
+  "last_updated": "2026-11-09T21:51:07Z"
 }
